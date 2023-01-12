@@ -63,8 +63,8 @@ CREATE TABLE ReservationsSejours(
 --
 -- Table Fidelite
 --
-DROP TABLE IF EXISTS Fidelite;
-CREATE TABLE Fidelite(
+DROP TABLE IF EXISTS Fidelites;
+CREATE TABLE Fidelites(
    IdFidelite INT AUTO_INCREMENT PRIMARY KEY,
    LibelleFidelite VARCHAR(50) ,
    DescriptionFidelite TEXT

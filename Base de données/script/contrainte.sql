@@ -2,7 +2,7 @@ ALTER TABLE Entreprises ADD CONSTRAINT FK_Entreprises_Clients FOREIGN KEY (IdCli
 
 ALTER TABLE Particuliers ADD CONSTRAINT FK_Particuliers_Clients FOREIGN KEY(IdClient) REFERENCES Clients(IdClient);
 
-ALTER TABLE Particuliers ADD CONSTRAINT FK_Particuliers_Fidelites FOREIGN KEY(IdFidelite) REFERENCES Fidelite(IdFidelite);
+ALTER TABLE Particuliers ADD CONSTRAINT FK_Particuliers_Fidelites FOREIGN KEY(IdFidelite) REFERENCES Fidelites(IdFidelite);
 
 ALTER TABLE ReservationsSejours ADD CONSTRAINT FK_ReservationsSejours_Clients FOREIGN KEY(IdClient) REFERENCES Clients(IdClient);
 
