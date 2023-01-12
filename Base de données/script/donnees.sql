@@ -15,7 +15,7 @@ INSERT INTO TypesChambres VALUES(1,"Standard Simple",54.99);
 INSERT INTO TypesChambres VALUES(2,"Standard Double",65);
 INSERT INTO TypesChambres VALUES(3,"Deluxe Simple",69.99);
 INSERT INTO TypesChambres VALUES(4,"Deluxe Double",134.99);
-INSERT INTO TypesChambres VALUES(5,"Suite",);
+INSERT INTO TypesChambres VALUES(5,"Suite",249.99);
 -- 
 -- EquipementsChambres
 INSERT INTO EquipementsChambres VALUES(1,"Coffre-fort","Un coffre-fort pour stocker les objets de valeurs en sécurité");
@@ -41,11 +41,11 @@ INSERT INTO Chambres VALUES(4,202,3,1,3);
 INSERT INTO Chambres VALUES(5,301,5,2,4);
 -- 
 -- PossessionsEquipements
-INSERT INTO PossessionsEquipements VALUES(1,3,1);
-INSERT INTO PossessionsEquipements VALUES(2,4,1);
-INSERT INTO PossessionsEquipements VALUES(3,5,1);
-INSERT INTO PossessionsEquipements VALUES(4,5,2);
-INSERT INTO PossessionsEquipements VALUES(5,5,3);
+INSERT INTO PossessionsEquipements VALUES(1,1,3);
+INSERT INTO PossessionsEquipements VALUES(2,1,4);
+INSERT INTO PossessionsEquipements VALUES(3,1,5);
+INSERT INTO PossessionsEquipements VALUES(4,2,5);
+INSERT INTO PossessionsEquipements VALUES(5,3,5);
 -- 
 -- TypesPaiements
 INSERT INTO TypesPaiements VALUES(1,"Espèces");
@@ -67,9 +67,9 @@ INSERT INTO Fidelites VALUES(3,"Or","Réduction de 15% sur les chambres Standard
 INSERT INTO Fidelites VALUES(4,"Platine","Réduction de 20% sur le séjour, 50% de réduction sur le premier massage");
 -- 
 -- HistoriquesNettoyages
-INSERT INTO HistoriquesNettoyages VALUES(1,3,1);
-INSERT INTO HistoriquesNettoyages VALUES(2,5,4);
-INSERT INTO HistoriquesNettoyages VALUES(3,5,5);
+INSERT INTO HistoriquesNettoyages VALUES(1,3,1,"12/01/2023 09:35");
+INSERT INTO HistoriquesNettoyages VALUES(2,5,4,"12/01/2023 09:45");
+INSERT INTO HistoriquesNettoyages VALUES(3,5,5,"12/01/2023 10:35");
 -- 
 -- Clients
 INSERT INTO Clients VALUES(1,"Sérien","Jean","jean.sérien@gmail.com","06 01 02 03 04 05");
@@ -77,8 +77,8 @@ INSERT INTO Clients VALUES(2,"Megratt","Sam","sam.megratt@gmail,com","06 58 65 4
 INSERT INTO Clients VALUES(3,"Chmonfiss","Thierry","thierry.chmonfiss@gmail.com","07 54 97 25 35 40");
 -- 
 -- Particuliers
-INSERT INTO Particuliers VALUES(1,10821,"Bronze");
-INSERT INTO Particuliers VALUES(3,20058,"Or");
+INSERT INTO Particuliers VALUES(1,10821,"1");
+INSERT INTO Particuliers VALUES(3,20058,"3");
 -- 
 -- Entreprises
 INSERT INTO Entreprises VALUES(2,"Exploitation Inc.","54654658464",23554,0.08);
@@ -107,3 +107,10 @@ INSERT INTO Facturations VALUES(6,1,2,4,2302,4,"09/01/2023 09:00");
 INSERT INTO Facturations VALUES(7,1,2,4,2302,4,"10/01/2023 09:30");
 INSERT INTO Facturations VALUES(8,1,2,4,2302,4,"11/01/2023 07:45");
 INSERT INTO Facturations VALUES(9,2,3,2,2304,1,"11/01/2023 08:30");
+-- 
+-- HistoriquesChambres
+INSERT INTO HistoriquesChambres VALUES(1,3,1);
+INSERT INTO HistoriquesChambres VALUES(2,3,2);
+INSERT INTO HistoriquesChambres VALUES(3,4,2);
+INSERT INTO HistoriquesChambres VALUES(4,2,3);
+INSERT INTO HistoriquesChambres VALUES(5,5,4);

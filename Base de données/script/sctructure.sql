@@ -54,6 +54,7 @@ CREATE TABLE ReservationsSejours(
    IdReservationSejour INT AUTO_INCREMENT PRIMARY KEY,
    NumReservationSejour INT,
    DateDebutReservationSejour DATE,
+   HeureArriveePrevue TIME,
    DateFinReservationSejour DATE,
    NbPersonnes INT,
    NbChambres INT,
