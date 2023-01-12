@@ -109,8 +109,8 @@ INSERT INTO Facturations VALUES(8,1,2,4,2302,4,"11/01/2023 07:45");
 INSERT INTO Facturations VALUES(9,2,3,2,2304,1,"11/01/2023 08:30");
 -- 
 -- HistoriquesChambres
-INSERT INTO HistoriquesChambres VALUES(1,3,1);
-INSERT INTO HistoriquesChambres VALUES(2,3,2);
-INSERT INTO HistoriquesChambres VALUES(3,4,2);
-INSERT INTO HistoriquesChambres VALUES(4,2,3);
-INSERT INTO HistoriquesChambres VALUES(5,5,4);
+INSERT INTO HistoriqueChambres VALUES(1,3,1);
+INSERT INTO HistoriqueChambres VALUES(2,3,2);
+INSERT INTO HistoriqueChambres VALUES(3,4,2);
+INSERT INTO HistoriqueChambres VALUES(4,2,3);
+INSERT INTO HistoriqueChambres VALUES(5,5,4);
