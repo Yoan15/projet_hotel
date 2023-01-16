@@ -34,9 +34,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Data\Profiles\" />
-  </ItemGroup>
-
 </Project>
