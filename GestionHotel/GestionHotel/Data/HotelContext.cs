@@ -87,7 +87,7 @@ namespace GestionHotel.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chambres_StatutsChambres");
 
-                entity.HasOne(d => d.IdTypeChambreNavigation)
+                entity.HasOne(d => d.TypeChambreObj)
                     .WithMany(p => p.Chambres)
                     .HasForeignKey(d => d.IdTypeChambre)
                     .OnDelete(DeleteBehavior.ClientSetNull)
