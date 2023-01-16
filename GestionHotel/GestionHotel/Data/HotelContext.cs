@@ -75,7 +75,7 @@ namespace GestionHotel.Data
 
                 entity.Property(e => e.NumChambre).HasColumnType("int(11)");
 
-                entity.HasOne(d => d.IdEtageNavigation)
+                entity.HasOne(d => d.EtageObj)
                     .WithMany(p => p.Chambres)
                     .HasForeignKey(d => d.IdEtage)
                     .OnDelete(DeleteBehavior.ClientSetNull)
