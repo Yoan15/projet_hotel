@@ -15,5 +15,6 @@ namespace GestionHotel.Data.Dtos
         public int IdEtage { get; set; }
 
         public virtual EtageDTO EtageObj { get; set; }
+        public virtual TypesChambreDTO TypeChambreObj { get; set; }
     }
 }
