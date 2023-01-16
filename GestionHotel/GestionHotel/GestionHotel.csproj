@@ -34,11 +34,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Data\Dtos\" />
-    <Folder Include="Data\Services\" />
-    <Folder Include="Data\Profiles\" />
-  </ItemGroup>
-
 </Project>
