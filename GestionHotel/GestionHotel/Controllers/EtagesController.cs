@@ -14,8 +14,7 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     class EtagesController : ControllerBase
     {
 
@@ -38,14 +37,12 @@ namespace GestionHotel.Controllers
             _mapper = config.CreateMapper();
         }
 
-        [HttpGet]
         public IEnumerable<EtageDTO> GetAllEtages()
         {
             var listeEtages = _service.GetAllEtages();
             return _mapper.Map<IEnumerable<EtageDTO>>(listeEtages);
         }
 
-        [HttpGet("{id}", Name = "GetEtageById")]
         public EtageDTO GetEtageById(int id)
         {
             var etgItem = _service.GetEtageById(id);
@@ -56,14 +53,12 @@ namespace GestionHotel.Controllers
             return _mapper.Map<EtageDTO>(etgItem);
         }
 
-        [HttpPost]
         public ActionResult<EtageDTO> CreateEtage(Etage etg)
         {
             _service.AddEtage(etg);
             return CreatedAtRoute(nameof(GetEtageById), new { Id = etg.IdEtage }, etg);
         }
 
-        [HttpPut("{id}")]
         public ActionResult UpdateEtage(int id, Etage etg)
         {
             var etgFromRepo = _service.GetEtageById(id);
@@ -76,7 +71,6 @@ namespace GestionHotel.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id}")]
         public ActionResult PartialEtageUpdate(int id, JsonPatchDocument<Etage> patchDoc)
         {
             var etgFromRepo = _service.GetEtageById(id);
@@ -98,8 +92,6 @@ namespace GestionHotel.Controllers
 
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
         public ActionResult DeleteEtage(int id)
         {
             var etgModelFromRepo = _service.GetEtageById(id);

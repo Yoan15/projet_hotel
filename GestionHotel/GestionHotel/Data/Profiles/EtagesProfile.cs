@@ -17,8 +17,6 @@ namespace GestionHotel.Data.Profiles
             CreateMap<EtageDTO, Etage>();
             CreateMap<Etage, EtageDTONum>();
             CreateMap<EtageDTONum, Etage>();
-            CreateMap<Etage, EtageDTOIn>();
-            CreateMap<EtageDTOIn, Etage>();
         }
     }
 }

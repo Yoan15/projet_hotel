@@ -23,15 +23,15 @@ namespace GestionHotel
     public partial class MainWindow : Window
     {
         HotelContext _context;
-        EtagesController _etagesController;
+        TypesChambresController _etagesController;
 
         public MainWindow()
         {
             InitializeComponent();
             _context = new HotelContext();
-            _etagesController = new EtagesController(_context);
+            _etagesController = new TypesChambresController(_context);
 
-            dataGridTest.ItemsSource = _etagesController.GetAllEtages();
+            dataGridTest.ItemsSource = _etagesController.GetAllTypesChambres();
         }
     }
 }

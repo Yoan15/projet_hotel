@@ -8,16 +8,12 @@ namespace GestionHotel.Data.Dtos
 {
     class EtageDTO
     {
+        public int IdEtage { get; set; }
         public int? NumEtage { get; set; }
         public virtual ICollection<ChambreDTO> Chambres { get; set; }
     }
 
     class EtageDTONum
-    {
-        public int NumEtage { get; set; }
-    }
-
-    class EtageDTOIn
     {
         public int NumEtage { get; set; }
     }

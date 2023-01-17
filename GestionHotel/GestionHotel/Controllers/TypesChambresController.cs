@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using GestionHotel.Data;
 using GestionHotel.Data.Dtos;
 using GestionHotel.Data.Models;
+using GestionHotel.Data.Profiles;
 using GestionHotel.Data.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +14,22 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+
     public class TypesChambresController : ControllerBase
     {
 
         private readonly TypesChambresServices _service;
         private readonly IMapper _mapper;
+
+        public TypesChambresController(HotelContext _context)
+        {
+            _service = new TypesChambresServices(_context);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<TypesChambresProfiles>();
+            });
+            _mapper = config.CreateMapper();
+        }
 
         public TypesChambresController(TypesChambresServices service, IMapper mapper)
         {
@@ -26,77 +37,49 @@ namespace GestionHotel.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TypesChambreDTO>> GetAllTypesChambres()
+        public IEnumerable<TypesChambreDTO> GetAllTypesChambres()
         {
             var listeTypesChambres = _service.GetAllTypesChambres();
-            return Ok(_mapper.Map<IEnumerable<TypesChambreDTO>>(listeTypesChambres));
+            return _mapper.Map<IEnumerable<TypesChambreDTO>>(listeTypesChambres);
         }
 
-        [HttpGet("{id}", Name = "GetTypesChambreById")]
-        public ActionResult<TypesChambreDTO> GetTypesChambreById(int id)
+        public TypesChambreDTO GetTypesChambreById(int id)
         {
             var typeChambreItem = _service.GetTypesChambreById(id);
             if (typeChambreItem != null)
             {
-                return Ok(_mapper.Map<TypesChambreDTO>(typeChambreItem));
+                return _mapper.Map<TypesChambreDTO>(typeChambreItem);
             }
-            return NotFound();
+            return new TypesChambreDTO();
         }
 
-        [HttpPost]
-        public ActionResult<TypesChambreDTO> CreateTypesChambre(TypesChambre typeChambre)
+        public TypesChambreDTO CreateTypesChambre(TypesChambre typeChambre)
         {
             _service.AddTypesChambre(typeChambre);
-            return CreatedAtRoute(nameof(GetTypesChambreById), new { Id = typeChambre.IdTypeChambre }, typeChambre);
+            return GetTypesChambreById(typeChambre.IdTypeChambre);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateTypesChambre(int id, TypesChambre typeChambre)
+        public int UpdateTypesChambre(TypesChambre typeChambre)
         {
-            var typeChambreFromRepo = _service.GetTypesChambreById(id);
+            var typeChambreFromRepo = _service.GetTypesChambreById(typeChambre.IdTypeChambre);
             if (typeChambreFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _mapper.Map(typeChambre, typeChambreFromRepo);
             _service.UpdateTypesChambre(typeChambreFromRepo);
-            return NoContent();
+            return 0;
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult PartialTypesChambreUpdate(int id, JsonPatchDocument<TypesChambre> patchDoc)
-        {
-            var typeChambreFromRepo = _service.GetTypesChambreById(id);
-            if (typeChambreFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var typeChambreToPatch = _mapper.Map<TypesChambre>(typeChambreFromRepo);
-            patchDoc.ApplyTo(typeChambreToPatch, ModelState);
-
-            if (!TryValidateModel(typeChambreToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(typeChambreToPatch, typeChambreFromRepo);
-            _service.UpdateTypesChambre(typeChambreFromRepo);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteTypesChambre(int id)
+        public int DeleteTypesChambre(int id)
         {
             var typeChambreModelFromRepo = _service.GetTypesChambreById(id);
             if (typeChambreModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _service.DeleteTypesChambre(typeChambreModelFromRepo);
-            return NoContent();
+            return 0;
         }
     }
 }
