@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using GestionHotel.Data;
 using GestionHotel.Data.Dtos;
 using GestionHotel.Data.Models;
+using GestionHotel.Data.Profiles;
 using GestionHotel.Data.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,91 +14,68 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TypesEmployesController:ControllerBase
+    public class TypesEmployesController : ControllerBase
     {
 
         private readonly TypesEmployesServices _service;
         private readonly IMapper _mapper;
 
-        public TypesEmployesController(TypesEmployesServices service, IMapper mapper)
+        public TypesEmployesController(HotelContext context)
         {
-            _service = service;
-            _mapper = mapper;
+            _service = new TypesEmployesServices(context);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<EmployesProfile>();
+                cfg.AddProfile<TypesEmployesProfile>();
+            });
+            _mapper = config.CreateMapper();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<TypesEmployeDTO>> GetAllTypesEmployes()
+        public IEnumerable<TypesEmployeDTO> GetAllTypesEmployes()
         {
             var listeTypesEmployes = _service.GetAllTypesEmployes();
-            return Ok(_mapper.Map<IEnumerable<TypesEmployeDTO>>(listeTypesEmployes));
+            return _mapper.Map<IEnumerable<TypesEmployeDTO>>(listeTypesEmployes);
         }
 
-        [HttpGet("{id}", Name = "GetTypesEmployeById")]
-        public ActionResult<TypesEmployeDTO> GetTypesEmployeById(int id)
+        public TypesEmploye GetTypesEmployeById(int id)
         {
             var tEmpItem = _service.GetTypesEmployeById(id);
             if (tEmpItem != null)
             {
-                return Ok(_mapper.Map<TypesEmployeDTO>(tEmpItem));
+                return tEmpItem;
             }
-            return NotFound();
+            return new TypesEmploye();
         }
 
-        [HttpPost]
-        public ActionResult<TypesEmployeDTO> CreateTypesEmploye(TypesEmploye tEmp)
+        public TypesEmploye CreateTypesEmploye(TypesEmployeDTO tEmp)
         {
-            _service.AddTypesEmploye(tEmp);
-            return CreatedAtRoute(nameof(GetTypesEmployeById), new { Id = tEmp.IdTypeEmploye }, tEmp);
+            TypesEmploye te = _mapper.Map<TypesEmploye>(tEmp);
+            _service.AddTypesEmploye(te);
+            return GetTypesEmployeById(te.IdTypeEmploye);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateTypesEmploye(int id, TypesEmploye tEmp)
+        public int UpdateTypesEmploye(TypesEmployeDTO tEmp)
         {
-            var tEmpFromRepo = _service.GetTypesEmployeById(id);
+            var tEmpFromRepo = _service.GetTypesEmployeById(tEmp.IdTypeEmploye);
             if (tEmpFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _mapper.Map(tEmp, tEmpFromRepo);
             _service.UpdateTypesEmploye(tEmpFromRepo);
-            return NoContent();
-        }
-
-        [HttpPatch("{id}")]
-        public ActionResult PartialTypesEmployeUpdate(int id, JsonPatchDocument<TypesEmploye> patchDoc)
-        {
-            var tEmpFromRepo = _service.GetTypesEmployeById(id);
-            if (tEmpFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var tEmpToPatch = _mapper.Map<TypesEmploye>(tEmpFromRepo);
-            patchDoc.ApplyTo(tEmpToPatch, ModelState);
-
-            if (!TryValidateModel(tEmpToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(tEmpToPatch, tEmpFromRepo);
-            _service.UpdateTypesEmploye(tEmpFromRepo);
-
-            return NoContent();
+            return 0;
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteTypesEmploye(int id)
+        public int DeleteTypesEmploye(int id)
         {
             var tEmpModelFromRepo = _service.GetTypesEmployeById(id);
             if (tEmpModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _service.DeleteTypesEmploye(tEmpModelFromRepo);
-            return NoContent();
+            return 0;
         }
     }
 }

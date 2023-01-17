@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using GestionHotel.Data;
 using GestionHotel.Data.Dtos;
 using GestionHotel.Data.Models;
+using GestionHotel.Data.Profiles;
 using GestionHotel.Data.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,91 +14,67 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EmployesController:ControllerBase
+    public class EmployesController : ControllerBase
     {
 
         private readonly EmployesServices _service;
         private readonly IMapper _mapper;
 
-        public EmployesController(EmployesServices service, IMapper mapper)
+        public EmployesController(HotelContext context)
         {
-            _service = service;
-            _mapper = mapper;
+            _service = new EmployesServices(context);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<EmployesProfile>();
+                cfg.AddProfile<TypesEmployesProfile>();
+            });
+            _mapper = config.CreateMapper();
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<EmployeDTO>> GetAllEmployes()
+        public IEnumerable<EmployeDTO> GetAllEmployes()
         {
             var listeEmployes = _service.GetAllEmployes();
-            return Ok(_mapper.Map<IEnumerable<EmployeDTO>>(listeEmployes));
+            return _mapper.Map<IEnumerable<EmployeDTO>>(listeEmployes);
         }
 
-        [HttpGet("{id}", Name = "GetEmployeById")]
-        public ActionResult<EmployeDTO> GetEmployeById(int id)
+        public Employe GetEmployeById(int id)
         {
             var employeItem = _service.GetEmployeById(id);
             if (employeItem != null)
             {
-                return Ok(_mapper.Map<EmployeDTO>(employeItem));
+                return employeItem;
             }
-            return NotFound();
+            return new Employe();
         }
 
-        [HttpPost]
-        public ActionResult<EmployeDTO> CreateEmploye(Employe employe)
+        public Employe CreateEmploye(EmployeDTOAvecLibelleType employe)
         {
-            _service.AddEmploye(employe);
-            return CreatedAtRoute(nameof(GetEmployeById), new { Id = employe.IdEmploye }, employe);
+            Employe e = _mapper.Map<Employe>(employe);
+            _service.AddEmploye(e);
+            return GetEmployeById(e.IdEmploye);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateEmploye(int id, Employe employe)
+        public int UpdateEmploye(EmployeDTOAvecLibelleType employe)
         {
-            var employeFromRepo = _service.GetEmployeById(id);
+            var employeFromRepo = _service.GetEmployeById(employe.IdEmploye);
             if (employeFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _mapper.Map(employe, employeFromRepo);
             _service.UpdateEmploye(employeFromRepo);
-            return NoContent();
+            return 0;
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult PartialEmployeUpdate(int id, JsonPatchDocument<Employe> patchDoc)
-        {
-            var employeFromRepo = _service.GetEmployeById(id);
-            if (employeFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var employeToPatch = _mapper.Map<Employe>(employeFromRepo);
-            patchDoc.ApplyTo(employeToPatch, ModelState);
-
-            if (!TryValidateModel(employeToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(employeToPatch, employeFromRepo);
-            _service.UpdateEmploye(employeFromRepo);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteEmploye(int id)
+        public int DeleteEmploye(int id)
         {
             var employeModelFromRepo = _service.GetEmployeById(id);
             if (employeModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _service.DeleteEmploye(employeModelFromRepo);
-            return NoContent();
+            return 0;
         }
     }
 }

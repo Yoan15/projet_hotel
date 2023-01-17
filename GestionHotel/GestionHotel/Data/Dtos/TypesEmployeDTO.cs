@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Dtos
 {
-    public class TypesEmployeDTO
+    public class TypesEmployeDTOAvecEmployes
     {
-        public TypesEmployeDTO()
+        public TypesEmployeDTOAvecEmployes()
         {
             Employes = new HashSet<EmployeDTOSansTypeEmploye>();
         }
@@ -19,8 +19,9 @@ namespace GestionHotel.Data.Dtos
         public virtual ICollection<EmployeDTOSansTypeEmploye> Employes { get; set; }
     }
 
-    public class TypesEmployeDTOAvecLibelle
+    public class TypesEmployeDTO
     {
+        public int IdTypeEmploye { get; set; }
         public string LibelleTypeEmploye { get; set; }
 
     }

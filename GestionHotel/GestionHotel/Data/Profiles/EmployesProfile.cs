@@ -13,11 +13,11 @@ namespace GestionHotel.Data.Profiles
     {
         public EmployesProfile()
         {
-            CreateMap<Employe, EmployeDTO>().ForMember(eDTO => eDTO.TypeEmploye, o=>o.MapFrom(e => e.TypeEmploye.LibelleTypeEmploye));
+            CreateMap<Employe, EmployeDTO>();
             CreateMap<EmployeDTO, Employe>();
 
-            CreateMap<Employe, EmployeDTOSansTypeEmploye>();
-            CreateMap<EmployeDTOSansTypeEmploye, Employe>();
+            CreateMap<Employe, EmployeDTOAvecLibelleType>().ForMember(eDTO => eDTO.LibelleTypeEmploye, o => o.MapFrom(e => e.TypeEmploye.LibelleTypeEmploye));
+            CreateMap<EmployeDTOAvecLibelleType, Employe>();
         }
     }
 }

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Dtos
 {
-    class EtageDTO
+    public class EtageDTO
     {
         public int IdEtage { get; set; }
         public int? NumEtage { get; set; }
         public virtual ICollection<ChambreDTO> Chambres { get; set; }
     }
 
-    class EtageDTONum
+    public class EtageDTONum
     {
         public int NumEtage { get; set; }
     }

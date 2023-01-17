@@ -16,8 +16,8 @@ namespace GestionHotel.Data.Profiles
             CreateMap<TypesEmploye, TypesEmployeDTO>();
             CreateMap<TypesEmployeDTO, TypesEmploye>();
 
-            CreateMap<TypesEmploye, TypesEmployeDTOAvecLibelle>();
-            CreateMap<TypesEmployeDTOAvecLibelle, TypesEmploye>();
+            CreateMap<TypesEmploye, TypesEmployeDTOAvecEmployes>();
+            CreateMap<TypesEmployeDTOAvecEmployes, TypesEmploye>();
         }
     }
 }
