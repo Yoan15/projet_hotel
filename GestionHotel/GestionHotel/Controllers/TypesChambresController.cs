@@ -53,13 +53,14 @@ namespace GestionHotel.Controllers
             return new TypesChambreDTO();
         }
 
-        public TypesChambreDTO CreateTypesChambre(TypesChambre typeChambre)
+        public TypesChambreDTO CreateTypesChambre(TypesChambreDTO typeChambre)
         {
-            _service.AddTypesChambre(typeChambre);
+            TypesChambre tc = _mapper.Map<TypesChambre>(typeChambre);
+            _service.AddTypesChambre(tc);
             return GetTypesChambreById(typeChambre.IdTypeChambre);
         }
 
-        public int UpdateTypesChambre(TypesChambre typeChambre)
+        public int UpdateTypesChambre(TypesChambreDTO typeChambre)
         {
             var typeChambreFromRepo = _service.GetTypesChambreById(typeChambre.IdTypeChambre);
             if (typeChambreFromRepo == null)
