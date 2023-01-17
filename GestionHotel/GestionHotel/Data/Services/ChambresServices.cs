@@ -1,4 +1,5 @@
 ﻿using GestionHotel.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,12 +40,12 @@ namespace GestionHotel.Data.Services
 
         public IEnumerable<Chambre> GetAllChambres()
         {
-            return _context.Chambres.ToList();
+            return _context.Chambres.Include("TypeChambreObj").Include("EtageObj").Include("StatutChambreObj").ToList();
         }
 
         public Chambre GetChambreById(int id)
         {
-            return _context.Chambres.FirstOrDefault(c => c.IdChambre == id);
+            return _context.Chambres.Include("TypesChambre").Include("Etage").Include("StatutsChambre").FirstOrDefault(c => c.IdChambre == id);
         }
 
         public void UpdateChambre(Chambre c)

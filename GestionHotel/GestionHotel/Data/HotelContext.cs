@@ -80,7 +80,7 @@ namespace GestionHotel.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chambres_Etages");
 
-                entity.HasOne(d => d.StatutChambre)
+                entity.HasOne(d => d.StatutChambreObj)
                     .WithMany(p => p.Chambres)
                     .HasForeignKey(d => d.IdStatutChambre)
                     .OnDelete(DeleteBehavior.ClientSetNull)

@@ -18,6 +18,9 @@ namespace GestionHotel.Data.Profiles
 
             CreateMap<Chambre, ChambreDTOStatut>();
             CreateMap<ChambreDTOStatut, Chambre>();
+
+
+            CreateMap<Chambre, ChambreDTOAvecDetail>().ForMember(c => c.NumEtage, a => a.MapFrom(s => s.EtageObj.NumEtage)).ForMember(c => c.LibelleTypeChambre, a => a.MapFrom(s => s.TypeChambreObj.LibelleTypeChambre)).ForMember(c => c.LibelleStatutChambre, a => a.MapFrom(s => s.StatutChambreObj.LibelleStatutChambre));
         }
     }
 }

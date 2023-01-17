@@ -14,10 +14,14 @@ namespace GestionHotel.Data.Dtos
         public int IdTypeChambre { get; set; }
         public int IdStatutChambre { get; set; }
         public int IdEtage { get; set; }
+    }
 
-        public virtual EtageDTO EtageObj { get; set; }
-        public virtual StatutsChambreDTO StatutChambreObj { get; set; }
-        public virtual TypesChambreDTO TypeChambreObj { get; set; }
+    public class ChambreDTOAvecDetail
+    {
+        public int NumChambre { get; set; }
+        public int NumEtage { get; set; }
+        public string LibelleTypeChambre { get; set; }
+        public string LibelleStatutChambre { get; set; }
     }
 
     class ChambreDTOAvecNumEtage
