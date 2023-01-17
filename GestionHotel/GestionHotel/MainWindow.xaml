@@ -22,5 +22,17 @@
         <DataGrid x:Name="dataGridTest" Grid.Column="1" Grid.Row="1">
             
         </DataGrid>
+        <Grid Grid.Column="1" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Ajouter" Click="Button_Click"/>
+            <Button Grid.Column="2" Content="Modifier" Click="Button_Click"/>
+            <Button Grid.Column="4" Content="Supprimer" Click="Button_Click"/>
+        </Grid>
     </Grid>
 </Window>
