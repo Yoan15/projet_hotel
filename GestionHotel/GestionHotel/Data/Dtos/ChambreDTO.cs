@@ -10,12 +10,20 @@ namespace GestionHotel.Data.Dtos
     public class ChambreDTO
     {
         public int IdChambre { get; set; }
-        public int? NumChambre { get; set; }
+        public int NumChambre { get; set; }
         public int IdTypeChambre { get; set; }
         public int IdStatutChambre { get; set; }
         public int IdEtage { get; set; }
 
         public virtual EtageDTO EtageObj { get; set; }
+        public virtual TypesChambreDTO TypeChambreObj { get; set; }
+    }
+
+    class ChambreDTOAvecNumEtage
+    {
+        public int NumChambre { get; set; }
+        public int IdEtage { get; set; }
+        public int NumEtage { get; set; }
     }
 
     public class ChambreDTOStatut

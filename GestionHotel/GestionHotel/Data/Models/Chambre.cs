@@ -21,8 +21,8 @@ namespace GestionHotel.Data.Models
         public int IdEtage { get; set; }
 
         public virtual Etage EtageObj { get; set; }
+        public virtual TypesChambre TypeChambreObj { get; set; }
         public virtual StatutsChambre StatutChambre { get; set; }
-        public virtual TypesChambre IdTypeChambreNavigation { get; set; }
         public virtual ICollection<HistoriqueChambre> Historiquechambres { get; set; }
         public virtual ICollection<HistoriquesNettoyage> Historiquesnettoyages { get; set; }
         public virtual ICollection<PossessionsEquipement> Possessionsequipements { get; set; }

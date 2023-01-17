@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GestionHotel.Controllers;
+using GestionHotel.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,16 @@ namespace GestionHotel
     /// </summary>
     public partial class MainWindow : Window
     {
+        HotelContext _context;
+        TypesChambresController _etagesController;
+
         public MainWindow()
         {
             InitializeComponent();
+            _context = new HotelContext();
+            _etagesController = new TypesChambresController(_context);
+
+            dataGridTest.ItemsSource = _etagesController.GetAllTypesChambres();
         }
     }
 }
