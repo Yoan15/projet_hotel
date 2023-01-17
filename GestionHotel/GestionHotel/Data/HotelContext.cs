@@ -81,7 +81,7 @@ namespace GestionHotel.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Chambres_Etages");
 
-                entity.HasOne(d => d.IdStatutChambreNavigation)
+                entity.HasOne(d => d.StatutChambre)
                     .WithMany(p => p.Chambres)
                     .HasForeignKey(d => d.IdStatutChambre)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -140,7 +140,7 @@ namespace GestionHotel.Data
 
                 entity.Property(e => e.PrenomEmploye).HasMaxLength(50);
 
-                entity.HasOne(d => d.IdTypeEmployeNavigation)
+                entity.HasOne(d => d.TypeEmploye)
                     .WithMany(p => p.Employes)
                     .HasForeignKey(d => d.IdTypeEmploye)
                     .OnDelete(DeleteBehavior.ClientSetNull)

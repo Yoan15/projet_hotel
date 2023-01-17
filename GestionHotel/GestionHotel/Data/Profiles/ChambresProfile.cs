@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Profiles
 {
-    public class StatutsChambresProfiles : Profile
+    public class ChambresProfile : Profile
     {
-        public StatutsChambresProfiles()
+        public ChambresProfile()
         {
-            CreateMap<StatutsChambre, StatutsChambreDTO>();
-            CreateMap<StatutsChambreDTO, StatutsChambre>();
+            CreateMap<Chambre, ChambreDTO>();
+            CreateMap<ChambreDTO, Chambre>();
+
+            CreateMap<Chambre, ChambreDTOStatut>();
+            CreateMap<ChambreDTOStatut, Chambre>();
         }
     }
 }
