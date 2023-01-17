@@ -25,19 +25,19 @@ namespace GestionHotel
     public partial class MainWindow : Window
     {
         HotelContext _context;
-        TypesChambresController _controller;
+        ChambresController _controller;
 
         public MainWindow()
         {
             InitializeComponent();
             _context = new HotelContext();
-            _controller = new TypesChambresController(_context);
+            _controller = new ChambresController(_context);
             remplirDataGrid();
         }
 
         public void remplirDataGrid()
         {
-            dataGridTest.ItemsSource = _controller.GetAllTypesChambres();
+            dataGridTest.ItemsSource = _controller.GetAllChambresAvecDetail();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

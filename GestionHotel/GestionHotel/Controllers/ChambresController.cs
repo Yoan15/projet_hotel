@@ -36,6 +36,12 @@ namespace GestionHotel.Controllers
             return _mapper.Map<IEnumerable<ChambreDTO>>(listeChambres);
         }
 
+        public IEnumerable<ChambreDTOAvecDetail> GetAllChambresAvecDetail()
+        {
+            var listeChambres = _service.GetAllChambres();
+            return _mapper.Map<IEnumerable<ChambreDTOAvecDetail>>(listeChambres);
+        }
+
         public Chambre GetChambreById(int id)
         {
             var chambreItem = _service.GetChambreById(id);
@@ -58,46 +64,22 @@ namespace GestionHotel.Controllers
             var chambreFromRepo = _service.GetChambreById(chambre.IdChambre);
             if (chambreFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _mapper.Map(chambre, chambreFromRepo);
             _service.UpdateChambre(chambreFromRepo);
-            return NoContent();
+            return 0;
         }
-
-        [HttpPatch("{id}")]
-        public ActionResult PartialChambreUpdate(int id, JsonPatchDocument<Chambre> patchDoc)
-        {
-            var chambreFromRepo = _service.GetChambreById(id);
-            if (chambreFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var chambreToPatch = _mapper.Map<Chambre>(chambreFromRepo);
-            patchDoc.ApplyTo(chambreToPatch, ModelState);
-
-            if (!TryValidateModel(chambreToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(chambreToPatch, chambreFromRepo);
-            _service.UpdateChambre(chambreFromRepo);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteChambre(int id)
+     
+        public int DeleteChambre(int id)
         {
             var chambreModelFromRepo = _service.GetChambreById(id);
             if (chambreModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _service.DeleteChambre(chambreModelFromRepo);
-            return NoContent();
+            return 0;
         }
     }
 }

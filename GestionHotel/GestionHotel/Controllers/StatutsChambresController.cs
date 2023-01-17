@@ -24,7 +24,7 @@ namespace GestionHotel.Controllers
             _service = new StatutsChambresServices(_context);
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<StatutsChambresProfiles>();
+                cfg.AddProfile<StatutsChambresProfile>();
             });
             _mapper = config.CreateMapper();
         }
