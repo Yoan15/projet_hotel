@@ -8,7 +8,9 @@ namespace GestionHotel.Data.Dtos
 {
     public class TypesChambreDTO
     {
+        public int IdTypeChambre { get; set; }
         public string LibelleTypeChambre { get; set; }
-        public decimal? PrixTypeChambre { get; set; }
+        public decimal? PrixChambre { get; set; }
     }
+
 }

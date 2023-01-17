@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Services
 {
-    class EtagesServices
+    public class EtagesServices
     {
 
         private readonly HotelContext _context;

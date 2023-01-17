@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using GestionHotel.Data;
 using GestionHotel.Data.Dtos;
 using GestionHotel.Data.Models;
+using GestionHotel.Data.Profiles;
 using GestionHotel.Data.Services;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,21 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class StatutsChambresController : ControllerBase
     {
 
         private readonly StatutsChambresServices _service;
         private readonly IMapper _mapper;
+
+        public StatutsChambresController(HotelContext _context)
+        {
+            _service = new StatutsChambresServices(_context);
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<StatutsChambresProfiles>();
+            });
+            _mapper = config.CreateMapper();
+        }
 
         public StatutsChambresController(StatutsChambresServices service, IMapper mapper)
         {
@@ -26,77 +35,49 @@ namespace GestionHotel.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<StatutsChambreDTO>> GetAllStatutsChambres()
+        public IEnumerable<StatutsChambreDTO> GetAllStatutsChambres()
         {
             var listeStatutsChambres = _service.GetAllStatutsChambres();
-            return Ok(_mapper.Map<IEnumerable<StatutsChambreDTO>>(listeStatutsChambres));
+            return _mapper.Map<IEnumerable<StatutsChambreDTO>>(listeStatutsChambres);
         }
 
-        [HttpGet("{id}", Name = "GetStatutsChambreById")]
-        public ActionResult<StatutsChambreDTO> GetStatutsChambreById(int id)
+        public StatutsChambreDTO GetStatutsChambreById(int id)
         {
-            var statutItem = _service.GetStatutsChambreById(id);
-            if (statutItem != null)
+            var statutsChambreItem = _service.GetStatutsChambreById(id);
+            if (statutsChambreItem != null)
             {
-                return Ok(_mapper.Map<StatutsChambreDTO>(statutItem));
+                return _mapper.Map<StatutsChambreDTO>(statutsChambreItem);
             }
-            return NotFound();
+            return new StatutsChambreDTO();
         }
 
-        [HttpPost]
-        public ActionResult<StatutsChambreDTO> CreateStatutsChambre(StatutsChambre statut)
+        public StatutsChambreDTO CreateStatutsChambre(StatutsChambre statutsChambre)
         {
-            _service.AddStatutsChambre(statut);
-            return CreatedAtRoute(nameof(GetStatutsChambreById), new { Id = statut.IdStatutChambre }, statut);
+            _service.AddStatutsChambre(statutsChambre);
+            return GetStatutsChambreById(statutsChambre.IdStatutChambre);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult UpdateStatutsChambre(int id, StatutsChambre statut)
+        public int UpdateStatutsChambre(StatutsChambre statutsChambre)
         {
-            var statutFromRepo = _service.GetStatutsChambreById(id);
-            if (statutFromRepo == null)
+            var statutsChambreFromRepo = _service.GetStatutsChambreById(statutsChambre.IdStatutChambre);
+            if (statutsChambreFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
-            _mapper.Map(statut, statutFromRepo);
-            _service.UpdateStatutsChambre(statutFromRepo);
-            return NoContent();
+            _mapper.Map(statutsChambre, statutsChambreFromRepo);
+            _service.UpdateStatutsChambre(statutsChambreFromRepo);
+            return 0;
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult PartialStatutsChambreUpdate(int id, JsonPatchDocument<StatutsChambre> patchDoc)
+        public int DeleteStatutsChambre(int id)
         {
-            var statutFromRepo = _service.GetStatutsChambreById(id);
-            if (statutFromRepo == null)
+            var statusChambreModelFromRepo = _service.GetStatutsChambreById(id);
+            if (statusChambreModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
-
-            var statutToPatch = _mapper.Map<StatutsChambre>(statutFromRepo);
-            patchDoc.ApplyTo(statutToPatch, ModelState);
-
-            if (!TryValidateModel(statutToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(statutToPatch, statutFromRepo);
-            _service.UpdateStatutsChambre(statutFromRepo);
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public ActionResult DeleteStatutsChambre(int id)
-        {
-            var statutModelFromRepo = _service.GetStatutsChambreById(id);
-            if (statutModelFromRepo == null)
-            {
-                return NotFound();
-            }
-            _service.DeleteStatutsChambre(statutModelFromRepo);
-            return NoContent();
+            _service.DeleteStatutsChambre(statusChambreModelFromRepo);
+            return 0;
         }
     }
 }
