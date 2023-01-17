@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Profiles
 {
-    public class TypesEmployesProfile:Profile
+    public class TypesEmployesProfile : Profile
     {
         public TypesEmployesProfile()
         {

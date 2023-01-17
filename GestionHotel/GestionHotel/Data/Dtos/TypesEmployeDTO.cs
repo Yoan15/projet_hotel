@@ -11,12 +11,12 @@ namespace GestionHotel.Data.Dtos
     {
         public TypesEmployeDTOAvecEmployes()
         {
-            Employes = new HashSet<EmployeDTOSansTypeEmploye>();
+            Employes = new HashSet<EmployeDTOAvecLibelleType>();
         }
 
         public string LibelleTypeEmploye { get; set; }
 
-        public virtual ICollection<EmployeDTOSansTypeEmploye> Employes { get; set; }
+        public virtual ICollection<EmployeDTOAvecLibelleType> Employes { get; set; }
     }
 
     public class TypesEmployeDTO

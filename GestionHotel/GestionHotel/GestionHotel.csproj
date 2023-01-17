@@ -25,6 +25,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="Views\FormulaireTest - Copier - Copier.xaml.cs">
+      <DependentUpon>FormulaireTest - Copier.xaml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FormulaireTest - Copier.xaml.cs">
+      <DependentUpon>FormulaireTest.xaml.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,10 +38,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>
