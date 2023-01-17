@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GestionHotel.Data.Services
 {
-    class StatutsChambresServices
+    public class StatutsChambresServices
     {
 
         private readonly HotelContext _context;

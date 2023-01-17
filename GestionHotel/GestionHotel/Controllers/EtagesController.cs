@@ -53,54 +53,33 @@ namespace GestionHotel.Controllers
             return _mapper.Map<EtageDTO>(etgItem);
         }
 
-        public ActionResult<EtageDTO> CreateEtage(Etage etg)
+        public EtageDTO CreateEtage(Etage etg)
         {
             _service.AddEtage(etg);
-            return CreatedAtRoute(nameof(GetEtageById), new { Id = etg.IdEtage }, etg);
+            return GetEtageById(etg.IdEtage);
         }
 
-        public ActionResult UpdateEtage(int id, Etage etg)
+        public int UpdateEtage(Etage etg)
         {
-            var etgFromRepo = _service.GetEtageById(id);
+            var etgFromRepo = _service.GetEtageById(etg.IdEtage);
             if (etgFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _mapper.Map(etg, etgFromRepo);
             _service.UpdateEtage(etgFromRepo);
-            return NoContent();
+            return 0;
         }
 
-        public ActionResult PartialEtageUpdate(int id, JsonPatchDocument<Etage> patchDoc)
-        {
-            var etgFromRepo = _service.GetEtageById(id);
-            if (etgFromRepo == null)
-            {
-                return NotFound();
-            }
-
-            var etgToPatch = _mapper.Map<Etage>(etgFromRepo);
-            patchDoc.ApplyTo(etgToPatch, ModelState);
-
-            if (!TryValidateModel(etgToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _mapper.Map(etgToPatch, etgFromRepo);
-            _service.UpdateEtage(etgFromRepo);
-
-            return NoContent();
-        }
-        public ActionResult DeleteEtage(int id)
+        public int DeleteEtage(int id)
         {
             var etgModelFromRepo = _service.GetEtageById(id);
             if (etgModelFromRepo == null)
             {
-                return NotFound();
+                return -1;
             }
             _service.DeleteEtage(etgModelFromRepo);
-            return NoContent();
+            return 0;
         }
     }
 }
